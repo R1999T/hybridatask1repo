@@ -1,8 +1,8 @@
 //login with profile
 
 provider "aws" {
-  region  = "ap-south-1"
-  profile = "Raghav"
+  region  = "GIVE REGION NAME"
+  profile = "YOUR AWS PROFILE NAME"
 }
 
 //creating  key 
@@ -186,11 +186,11 @@ depends_on = [
    aws_s3_bucket.webbucket ,
   ]
 
-  for_each = fileset("C:/Users/User/Desktop/webdeploy/", "*")
+  for_each = fileset("PATH OF HTML FOLDER", "*")
   bucket = "my2000bucket"
   key    = each.value
-  source = "C:/Users/User/Desktop/webdeploy/${each.value}"
-  etag   = filemd5("C:/Users/User/Desktop/webdeploy/${each.value}")
+  source = "PATH OF HTML FOLDER/${each.value}"
+  etag   = filemd5("PATH OF HTML FOLDER${each.value}")
   acl="public-read"
 }
 
@@ -311,7 +311,7 @@ depends_on = [
 provisioner "remote-exec" {
     inline = [
       
-      "sudo git clone https://github.com/R1999T/hybridtask1.git /var/www/html/",
+      "sudo git <GITHUB REPO LINK> /var/www/html/",
       "sudo sed -i 's,img_url_1,https://${aws_cloudfront_distribution.s3_distribution.domain_name}/beautiful_evening.jpg,g' /var/www/html/index.html",
       "sudo sed -i 's,img_url_2,https://${aws_cloudfront_distribution.s3_distribution.domain_name}/natural_scenery.jpg,g' /var/www/html/index.html",
       "sudo systemctl restart httpd"
